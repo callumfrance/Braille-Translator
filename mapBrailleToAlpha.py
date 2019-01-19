@@ -2,6 +2,10 @@
 
 # http://www.duxburysystems.org/ximages/ueb_black8.pdf?type=8
 
+# https://docs.python.org/3/library/functions.html#chr
+# http://jrgraphix.net/r/Unicode/2800-28FF
+# https://www.rapidtables.com/convert/number/hex-to-decimal.html
+
 # the alphabet
 letters_A = {
         chr(10241): 'a',
