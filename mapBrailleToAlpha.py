@@ -1,6 +1,8 @@
 # Contains dictionaries that map braille to English letters.
 
-letters = {chr(10241): 'a',
+# http://www.duxburysystems.org/ximages/ueb_black8.pdf?type=8
+
+letters_A = {chr(10241): 'a',
            chr(10243): 'b',
            chr(10249): 'c',
            chr(10265): 'd',
@@ -27,7 +29,7 @@ letters = {chr(10241): 'a',
            chr(10301): 'y',
            chr(10293): 'z'}
 
-contractions = {chr(10243): 'but',
+contractions_A = {chr(10243): 'but',
                 chr(10249): 'can',
                 chr(10265): 'do',
                 chr(10257): 'every',
@@ -60,7 +62,7 @@ contractions = {chr(10243): 'but',
                 chr(10292): 'was',
                 chr(10262): 'to'}
 
-punctuation = {chr(10242): ',',
+punctuation_A = {chr(10242): ',',
                chr(10246): ';',
                chr(10258): ':',
                chr(10290): '.',
@@ -73,7 +75,7 @@ punctuation = {chr(10242): ',',
                chr(10244): '\'',
                chr(10276): '-'}
 
-numbers = {chr(10241): '1',
+numbers_A = {chr(10241): '1',
            chr(10243): '2',
            chr(10249): '3',
            chr(10265): '4',
