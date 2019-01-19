@@ -2,6 +2,8 @@
 
 # http://www.duxburysystems.org/ximages/ueb_black8.pdf?type=8
 
+import mapBrailleToAlpha
+
 letters_B = {al : br for br, al in mapBrailleToAlpha.letters_A.items()}
 
 contractions_B = {al : br for br, al in mapBrailleToAlpha.contractions_A.items()}
