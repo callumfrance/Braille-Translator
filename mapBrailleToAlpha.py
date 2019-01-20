@@ -6,6 +6,12 @@
 # http://jrgraphix.net/r/Unicode/2800-28FF
 # https://www.rapidtables.com/convert/number/hex-to-decimal.html
 
+# https://en.wikipedia.org/wiki/Braille_pattern_dots-0
+
+'''
+This is map braille to alpha, so most of the new ones have to be redone
+'''
+
 # the alphabet
 letters_A = {
         chr(10241): 'a',
@@ -36,6 +42,7 @@ letters_A = {
         chr(10293): 'z',
         }
 
+
 # these are things that can be within a bigger word (or their own word)
 # that are aliased
 sub_aliases = {
@@ -64,7 +71,6 @@ sub_aliases = {
         'blind',      : 'bl',
         'braille',    : 'brl',
         'cannot',     : chr(10296) + 'c',
-        'ch',         : chr(10273),
         'character',  : chr(10256) + chr(10273),
         'children',   : chr(10273) + 'n',
         'conceive',   : chr(10258) + 'cv',
@@ -75,16 +81,13 @@ sub_aliases = {
         'deceivng',   : 'dcvg',
         'declare',    : 'dcl',
         'declaring',  : 'dclg',
-        'ed',         : chr(10283),
         'either',     : 'ei',
         'en',         : chr(10274),
-        'er',         : chr(10299),
         'ever',       : chr(10256) + 'e',
         'father',     : chr(10256) + 'f',
         'first',      : 'f' + chr(10252),
         'for',        : chr(10303),
         'friend',     : 'fr',
-        'gh',         : chr(10275),
         'good',       : 'gd',
         'great',      : 'grt',
         'had',        : chr(10296) + 'h',
@@ -93,8 +96,6 @@ sub_aliases = {
         'him',        : 'hm',
         'himself',    : 'hmf',
         'immediate',  : 'imm',
-        'in',         : chr(10260),
-        'ing',        : chr(10284),
         'itself',     : 'xf',
         'know',       : chr(10256) + 'k',
         'letter',     : 'lr',
@@ -111,10 +112,8 @@ sub_aliases = {
         'of',         : chr(10295),
         'one',        : chr(10256) + 'o',
         'oneself',    : chr(10256) + 'of',
-        'ou',         : chr(10291),
         'ought',      : chr(10256) + chr(10291),
         'ourselves',  : chr(10291) + 'rvs',
-        'ow',         : chr(10282),
         'paid',       : 'pd',
         'part',       : chr(10256) + 'p',
         'perceive',   : 'p' + chr(10299) + 'cv',
@@ -128,13 +127,10 @@ sub_aliases = {
         'rejoicing',  : 'rjcg',
         'right',      : chr(10256) + 'r',
         'said',       : 'sd',
-        'sh',         : chr(10281),
         'should',     : chr(10281) + 'd',
         'some',       : chr(10256) + 's',
         'spirit',     : chr(10296) + 's',
-        'st',         : chr(10252),
         'such',       : 's' + chr(10273),
-        'th',         : chr(10297),
         'the',        : chr(10286),
         'their',      : chr(10296) + chr(10286),
         'themselves', : chr(10286) + 'mvs',
@@ -150,7 +146,6 @@ sub_aliases = {
         'tonight',    : 'tn',
         'under',      : chr(10256) + 'u',
         'upon',       : chr(10264) + 'u',
-        'wh',         : chr(10289),
         'where',      : chr(10256) + chr(10289),
         'whose',      : chr(10264) + chr(10289),
         'with',       : chr(10302),
@@ -164,53 +159,166 @@ sub_aliases = {
         'yourselves', : 'yrvs',
         }
 
-# these are things that must be full words to get aliased
-word_aliases = {
-        'as',          : 'z',
-        'be',          : chr(10246),  # both a word or a prefix
+# only used when the word stands alone or
+# when followed by an apostrophe and one of the following end of words:
+# ['d', 'll', 're', 's', 't', 've',]
+# HOWEVER do not use when it is an acronym e.g. US for United States
+alphabetic_wordsigns = {
         'but',         : 'b',
         'can',         : 'c',
-        'child',       : chr(10273),
         'do',          : 'd',
-        'enough',      : chr(10274),
         'every',       : 'e',
         'from',        : 'f',
         'go',          : 'g',
         'have',        : 'h',
-        'his',         : chr(10278),
-        'it',          : 'x',
-        'its',         : 'xs',
         'just',        : 'j',
         'knowledge',   : 'k',
         'like',        : 'l',
         'more',        : 'm',
         'not',         : 'n',
-        'out',         : chr(10291),
         'people',      : 'p',
         'quite',       : 'q',
         'rather',      : 'r',
-        'shall',       : chr(10281),
         'so',          : 's',
-        'still',       : chr(10252),
         'that',        : 't',
-        'this',        : chr(10297),
         'us',          : 's',
         'very',        : 'v',
-        'was',         : chr(10292),
-        'were',        : chr(10294),
-        'which',       : chr(10289),
-        'will',        : 'w',
+        'it',          : 'x',
         'you',         : 'y',
+        'as',          : 'z',
+        'will',        : 'w',
+        }
+
+# use the strong wordsign when standing alone
+# or can be used when followed by apostrophe and one of these end of words
+# ['d', 'll', 're', 's', 't', 've',]
+strong_wordsigns = {
+        'child',       : chr(10273),
+        'shall',       : chr(10281),
+        'this',        : chr(10297),
+        'which',       : chr(10289),
+        'out',         : chr(10291),
+        'still',       : chr(10252),
+        }
+
+# use the strong contraction whenever it appears unless blocked by another rule
+strong_contractions = {
+        chr(10287): 'and',
+        chr(10303): 'for',
+        chr(10295): 'of',
+        chr(10286): 'the',
+        chr(10302): 'with',
+        }
+
+# use strong groupsigns wherever the letter it represents occur unless
+# blocked by another rule
+# however, these cannot be their own words. do not use for Sh!, St, Wh-? etc)
+# 'ing' can only be used if it is not at the beginning of a word (ingenious vs. ginger)
+strong_groupsigns = {
+        'ch',         : chr(10273),
+        'gh',         : chr(10275),
+        'sh',         : chr(10281),
+        'th',         : chr(10297),
+        'wh',         : chr(10289),
+        'ed',         : chr(10283),
+        'er',         : chr(10299),
+        'ou',         : chr(10291),
+        'ow',         : chr(10282),
+        'st',         : chr(10252),
+        'ing',        : chr(10284),
+        'ar',         : chr(10268),
+        }
+
+# use lower wordsigns
+# [be, were, his, was,] can only be used standing alone, and
+# not touching any punctuation sign
+# 'enough' can also be used capitalized
+# 'in' only occurs whenever it is in a sequence with an upper dot
+''' need to check the rule for these to nail it down '''
+lower_wordsigns = {
+        'be',          : chr(10246),
+        'enough',      : chr(10274),
+        'were',        : chr(10294),
+        'his',         : chr(10278),
+        'in',          : chr(10260),
+        'was',         : chr(10292),
+        }
+
+# [be, con, dis,] are used when they are prefixes only
+# [ea, bb, cc, ff, gg] are used when they are middle only
+# [en, in] are used wherever possible, but not when en is standing alone
+lower_groupsigns = {
+        'ea',          : chr(10242),
+        'be',          : chr(10246),
+        'bb',          : chr(10246),
+        'con',         : chr(10258),
+        'cc',          : chr(10258),
+        'dis',         : chr(10290),
+        'en',          : chr(10274),
+        'ff',          : chr(10262),
+        'gg',          : chr(10294),
+        'in',          : chr(10260),
+        }
+
+initial_letter_contractions = (
+        ilc_45,
+        ilc_456,
+        ilc_5,
+        )
+
+ilc_45 = {
+        'upon'         : chr(),
+        'these'         : chr(),
+        'those'         : chr(),
+        'whose'         : chr(),
+        'word'         : chr(),
+        }
+
+ilc_456 = {
+        'cannot'         : chr(),
+        'had'         : chr(),
+        'many'         : chr(),
+        'spirit'         : chr(),
+        'their'         : chr(),
+        'world'         : chr(),
+        }
+
+ilc_5 = {
+        'day'           : chr(),
+        'ever'          : chr(),
+        'father'        : chr(),
+        'here'          : chr(),
+        'know'          : chr(),
+        'lord'          : chr(),
+        'mother'        : chr(),
+        'name'          : chr(),
+        'one'           : chr(),
+        'part'          : chr(),
+        'question'      : chr(),
+        'right'         : chr(),
+        'some'          : chr(),
+        'time'          : chr(),
+        'under'         : chr(),
+        'young'         : chr(),
+        'there'         : chr(),
+        'character'     : chr(),
+        'through'       : chr(),
+        'where'         : chr(),
+        'ought'         : chr(),
+        'work'          : chr(),
+        }
+
+# these are things that must be full words to get aliased
+word_aliases = {
+        'its',         : 'xs',
         }
 
 contractions_A = {
         chr(10293): 'as',
-        chr(10287): 'and',
         chr(10243): 'but',
         chr(10249): 'can',
         chr(10265): 'do',
         chr(10257): 'every',
-        chr(10303): 'for', # remove ?
         chr(10251): 'from',
         chr(10267): 'go',
         chr(10259): 'have', # rem ?
@@ -222,18 +330,15 @@ contractions_A = {
         chr(10296): 'like',
         chr(10253): 'more',
         chr(10269): 'not',
-        chr(10295): 'of',
         chr(10255): 'people',
         chr(10271): 'quite',
         chr(10263): 'rather',
         chr(10254): 'so',
         chr(10270): 'that',
-        chr(10286): 'the',
         chr(10262): 'to',
         chr(10277): 'us',
         chr(10279): 'very',
         chr(10292): 'was',
-        chr(10302): 'with',
         chr(10298): 'will',
         chr(10301): 'you',
         }
