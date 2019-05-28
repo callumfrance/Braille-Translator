@@ -13,7 +13,7 @@ This is map braille to alpha, so most of the new ones have to be redone
 '''
 
 # the alphabet
-letters_A = {
+letters_B2A = {
         chr(10241): 'a',
         chr(10243): 'b',
         chr(10249): 'c',
@@ -69,7 +69,7 @@ sub_aliases = {
         'deceive'    : 'dcv',
         'deceivng'   : 'dcvg',
         'either'     : 'ei',
-      #  'en'         : chr(10274),
+      #  'en'         : chr(10274), # cannot be used stand-alone
         'friend'     : 'fr',
         'first'      : 'f' + chr(10252),
       #  'for'        : chr(10303),
@@ -324,7 +324,7 @@ shortforms = {
 word_aliases = {
         }
 
-contractions_A = {
+contractions_B2A = {
         chr(10293): 'as',
         chr(10243): 'but',
         chr(10249): 'can',
@@ -354,7 +354,7 @@ contractions_A = {
         chr(10301): 'you',
         }
 
-punctuation_A = {
+punctuation_B2A = {
         chr(10242): ',',
         chr(10246): ';',
         chr(10258): ':',
@@ -369,7 +369,7 @@ punctuation_A = {
         chr(10276): '-',
         }
 
-numbers_A = {
+numbers_B2A = {
         chr(10241): '1',
         chr(10243): '2',
         chr(10249): '3',
